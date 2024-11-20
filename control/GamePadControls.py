@@ -6,14 +6,15 @@ import array
 import pygame
 #import keyboard
 import json
+import os
 def constrain(val, min_val, max_val):
     return min(max_val, max(min_val, val))
 
 pygame.init()
 display = pygame.display.set_mode((300,300))
 
-UDP_IP = "169.254.218.236"
-UDP_PORT = 100
+#UDP_IP = "169.254.218.236"
+#UDP_PORT = 100
 # Local_IP = "169.254.153.129"
 # Local_Port = 4010
 
@@ -37,7 +38,7 @@ class DATA:
 keys = pygame.key.get_pressed()
 keysPrev = None
 ArrDATA = array.array('b',[DATA.left, DATA.right, DATA.ch1, DATA.ch2, DATA.ch3, DATA.ch4, DATA.ch5, DATA.ch6])
-sock.sendto(ArrDATA, (UDP_IP, UDP_PORT))
+#sock.sendto(ArrDATA, (UDP_IP, UDP_PORT))
 lastTime = 0
 
 # inisialising joysticks
@@ -47,12 +48,16 @@ for i in range (pygame.joystick.get_count()):
 for joystick in joysticks:
     joystick.init()
 
-with open("ps4ButtonMap.json",mode="r+") as file:
+with open(os.path.join("ps4ButtonMap.json"),mode="r+") as file:
     buttonMap = json.load(file)
             #left stick     #right stick    #l2     #r2
 analogMap = {0:0,   1:0,    2:0,    3:0,    4:-1,   5:-1}
 
-while True:
+#while True:
+def ReadInput():
+    global lastTime
+    global ArrDATA
+    global keys
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -148,17 +153,21 @@ while True:
         if event.type == pygame.JOYBUTTONUP:
             if event.button == buttonMap['x']:
                 DATA.ch1 = 0
+        if event.type == pygame.JOYAXISMOTION:
+            analogMap[event.axis] = event.value
+            for each in analogMap:
+                print(each, analogMap)
+
+
             
     DATA.left = constrain(DATA.left, -127, 127)
     DATA.right = constrain(DATA.right, -127, 127)
-    print("key pressed")
-        
-
-        
+    
     if (time.time()-lastTime>0.01):
         lastTime=time.time()
         ArrDATA = array.array('b',[DATA.left, DATA.right, DATA.ch1, DATA.ch2, DATA.ch3, DATA.ch4, DATA.ch5, DATA.ch6])
-        sock.sendto(ArrDATA, (UDP_IP, UDP_PORT))
+        #sock.sendto(ArrDATA, (UDP_IP, UDP_PORT))
+        return ArrDATA
 
 
 

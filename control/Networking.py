@@ -16,5 +16,6 @@ def setup():
                      socket.SOCK_DGRAM) # UDP
     
 def sendData(ArrDATA: array):
-    print(UDP_IP)
+    #print(UDP_IP)
     sock.sendto(ArrDATA, (UDP_IP, UDP_PORT))
+    pass
