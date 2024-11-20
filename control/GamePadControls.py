@@ -153,10 +153,20 @@ def ReadInput():
         if event.type == pygame.JOYBUTTONUP:
             if event.button == buttonMap['x']:
                 DATA.ch1 = 0
+
         if event.type == pygame.JOYAXISMOTION:
             analogMap[event.axis] = event.value
-            for each in analogMap:
-                print(each, analogMap)
+            #for each in analogMap:
+                #print(each, analogMap[each])
+            throttle = 0  
+            throttle = int((analogMap[5]+2) * 53)
+            if throttle < 20:
+                throttle = 0
+            DATA.left = throttle
+            DATA.right = throttle
+        if analogMap [5] +2 < 0.4:
+            DATA.left = 0
+            DATA.right = 0
 
 
             
@@ -166,6 +176,7 @@ def ReadInput():
     if (time.time()-lastTime>0.01):
         lastTime=time.time()
         ArrDATA = array.array('b',[DATA.left, DATA.right, DATA.ch1, DATA.ch2, DATA.ch3, DATA.ch4, DATA.ch5, DATA.ch6])
+        print(DATA.left)
         #sock.sendto(ArrDATA, (UDP_IP, UDP_PORT))
         return ArrDATA
 

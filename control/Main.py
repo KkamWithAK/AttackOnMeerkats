@@ -17,7 +17,7 @@ def Control():
     inputArray = GamePadControls.ReadInput()
     if inputArray != None:
         # UNCOMMENT THIS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        #sendPackets(inputArray)
+        sendPackets(inputArray)
         pass
     # set up pygame
     # while true, scan for user inputs

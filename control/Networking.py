@@ -8,7 +8,7 @@ def setup():
     global UDP_IP
     global UDP_PORT
     global sock
-    UDP_IP = "169.254.218.236"
+    UDP_IP = "192.168.137.104"
     UDP_PORT = 100
     #Local_IP = "169.254.153.129"
     #Local_Port = 4010
