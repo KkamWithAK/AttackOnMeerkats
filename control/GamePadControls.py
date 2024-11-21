@@ -32,7 +32,7 @@ class DATA:
     ch3 = 0
     ch4 = 0
     ch5 = 0
-    ch6 = 0     # LED
+    ch6 = 0    # LED
     def copy(): # So i can compare stuff, dw bout it
         return array.array('b',[DATA.left, DATA.right, DATA.ch1, DATA.ch2, DATA.ch3, DATA.ch4, DATA.ch5, DATA.ch6])
 
@@ -53,6 +53,7 @@ for joystick in joysticks:
 with open(os.path.join("ps4ButtonMap.json"),mode="r+") as file:
     buttonMap = json.load(file)
             #left stick     #right stick    #l2     #r2
+            #Horz   Vert    Horz    Vert
 analogMap = {0:0,   1:0,    2:0,    3:0,    4:-1,   5:-1} # all hold values between [-1,1]*
 # * may go slighty over (-1.000032342230)
 
@@ -124,6 +125,12 @@ def ReadInput():
             if keys[pygame.K_e]:
                 #Add some servo stuff in empty channels
                 keyPressed = True
+            
+            if keys[pygame.K_b]:
+                if DATA.ch6 == 1:
+                    DATA.ch6 = 2
+                else:
+                    DATA.ch6 = 1
 
             if not(keyPressed):
                 DATA.left = 0
@@ -250,18 +257,32 @@ def ReadInput():
             DATA.left = throttle
             DATA.right = throttle
 
+            # Tank based Steering
+            stickPos = abs(analogMap[0]) #Postion of Left Stick
+            deadzone = 0.3
+            bias = 0 # mutilpication of power that will be applied of somthing
+            if stickPos > deadzone:
+                bias = 2.4*stickPos**3 -3.47*stickPos**2 + 1.7*stickPos # how much the power will be distribuited: -1: 90%L 10%R,  0: 50%L 50%R, +1: 10%L 90%R
+                if analogMap < 0: # left
+                    DATA.left = int( DATA.left * (1-bias))
+                else: # right
+                    DATA.right = int( DATA.left * (1-bias))
+
+
+
+
+            
+
         #IF A BUTTON IS *STILL* HELD DOWN
         if buttonMapState['square']: # Handbrake
-            throttle = throttle // 2
-            if throttle < 40:
-                throttle = 0
-            DATA.left = throttle
-            DATA.right = throttle
+            DATA.left = 0
+            DATA.right = 0
 
 
             
     DATA.left = constrain(DATA.left, -127, 127)
     DATA.right = constrain(DATA.right, -127, 127)
+    DATA.ch6 = constrain(DATA.ch6, 0, 2)
     
     
     if (time.time()-lastTime>0.4):

@@ -1,18 +1,18 @@
 #include <WiFi.h>       //A collection of objects and functions for using WiFi on the ESP32
 #include "Actuators.h"  //This code is in the other tabs at the top of the IDE. Putting it here will de-clutter our code.
 
-const char *ssid = "Meerkats";    //The SSID of your hotspot, or network name
+const char *ssid = "Kaamil";    //The SSID of your hotspot, or network name
 const char *password = "password"; //The password of your network
 
 WiFiUDP Udp;  //Set up an object that handles UDP
 
 //Here we'll define variables for setting a static IP address. This way, there's no risk of your robot suddenly changing addresses.
-IPAddress local_ip(192, 168,137, 104);  //This is the static IP address that the ESP32 will try to use **** MAX'S IP ADRESS
-IPAddress gateway(172,22,157,201); //This is the gateway address that will be used by a laptop ****** MAX'S LAPTOP ADRESS
+//IPAddress local_ip(192, 168,137, 104);  //This is the static IP address that the ESP32 will try to use **** MAX'S IP ADRESS
+//IPAddress gateway(172,22,157,201); //This is the gateway address that will be used by a laptop ****** MAX'S LAPTOP ADRESS
 //IPAddress gateway(192, 168, 43, 1); //This is the gateway for most android phones
 
-//IPAddress local_ip(172,20,10,3); // Kaamil's IPHONE
-//IPAddress gateway(172,20,10,2); // Kaamil's LAPTOP
+IPAddress local_ip(172,20,10,3); // Kaamil's IPHONE
+IPAddress gateway(172,20,10,2); // Kaamil's LAPTOP
 
 IPAddress subnet(255, 255, 0, 0);
 
@@ -20,9 +20,9 @@ byte packetBuffer[255];  //We'll store the bytes from the UDP packet here. It ca
 
 unsigned int localPort = 100;  //Port number- make sure this is the same in both the python script and here
 
-SimpleMotor left(7,11);  //Make a motor object, to represent the left motor
-SimpleMotor right(8,9);
-Servo servo(10, 500, 2500);
+SimpleMotor left(8,9);  //Make a motor object, to represent the left motor
+SimpleMotor right(10,11);
+Servo servo(7, 500, 2500);
 int len;        //number of bytes recieved
 
 void setup() {

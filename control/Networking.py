@@ -8,8 +8,8 @@ def setup():
     global UDP_IP
     global UDP_PORT
     global sock
-    UDP_IP = "192.168.137.104" #Ip address of the laptop  ---- MAX'S LAPTOP
-    #UDP_IP = "172.20.10.3" - Kaamil's IPHONE
+    #UDP_IP = "192.168.137.104" #Ip address of the laptop  ---- MAX'S LAPTOP
+    UDP_IP = "172.20.10.3" #- Kaamil's IPHONE
     UDP_PORT = 100
     #Local_IP = "169.254.153.129"
     #Local_Port = 4010
