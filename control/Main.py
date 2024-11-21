@@ -6,14 +6,14 @@ import array
 import time
 import socket
 
-def createUDP():
+def createUDP(): # create connection
     Networking.setup()
 
-def sendPackets(DataArray: array):
+def sendPackets(DataArray: array): # send data to esp32
     Networking.sendData(DataArray)
-def createPygame():
+def createPygame(): # initialise pygame
     pass
-def Control():
+def Control(): # Get user inputs
     inputArray = GamePadControls.ReadInput()
     if inputArray != None:
         # UNCOMMENT THIS !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -30,4 +30,3 @@ def main():
         Control()
 main()
        
-        

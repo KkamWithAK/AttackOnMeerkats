@@ -7,9 +7,13 @@ const char *password = "password"; //The password of your network
 WiFiUDP Udp;  //Set up an object that handles UDP
 
 //Here we'll define variables for setting a static IP address. This way, there's no risk of your robot suddenly changing addresses.
-IPAddress local_ip(169, 254,218, 236);  //This is the static IP address that the ESP32 will try to use
-IPAddress gateway(192,168,1,88); //This is the gateway address that will be used by a laptop
+IPAddress local_ip(192, 168,137, 104);  //This is the static IP address that the ESP32 will try to use **** MAX'S IP ADRESS
+IPAddress gateway(172,22,157,201); //This is the gateway address that will be used by a laptop ****** MAX'S LAPTOP ADRESS
 //IPAddress gateway(192, 168, 43, 1); //This is the gateway for most android phones
+
+//IPAddress local_ip(172,20,10,3); // Kaamil's IPHONE
+//IPAddress gateway(172,20,10,2); // Kaamil's LAPTOP
+
 IPAddress subnet(255, 255, 0, 0);
 
 byte packetBuffer[255];  //We'll store the bytes from the UDP packet here. It can have up to 255 elements, although we'll only use a few
