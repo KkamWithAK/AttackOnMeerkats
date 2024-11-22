@@ -263,7 +263,7 @@ def ReadInput():
             bias = 0 # mutilpication of power that will be applied of somthing
             if stickPos > deadzone:
                 bias = 2.4*stickPos**3 -3.47*stickPos**2 + 1.7*stickPos # how much the power will be distribuited: -1: 90%L 10%R,  0: 50%L 50%R, +1: 10%L 90%R
-                if analogMap < 0: # left
+                if analogMap[0] < 0: # left
                     DATA.left = int( DATA.left * (1-bias))
                 else: # right
                     DATA.right = int( DATA.left * (1-bias))
@@ -289,13 +289,13 @@ def ReadInput():
         #print(prevArray,"\t",ArrDATA)
         lastTime=time.time()
         ArrDATA = array.array('b',[DATA.left, DATA.right, DATA.ch1, DATA.ch2, DATA.ch3, DATA.ch4, DATA.ch5, DATA.ch6])
-        print(DATA.right, analogMap[4], analogMap[5])
+        print(DATA.left, DATA.right,analogMap[0])
         #sock.sendto(ArrDATA, (UDP_IP, UDP_PORT))
         return ArrDATA
     if (prevArray != ArrDATA and time.time() - lastTime > 0.015):
         lastTime=time.time()
         ArrDATA = array.array('b',[DATA.left, DATA.right, DATA.ch1, DATA.ch2, DATA.ch3, DATA.ch4, DATA.ch5, DATA.ch6])
-        print(DATA.right, analogMap[4], analogMap[5])
+        print(DATA.left, DATA.right,analogMap[0])
         #sock.sendto(ArrDATA, (UDP_IP, UDP_PORT))
         return ArrDATA
     
