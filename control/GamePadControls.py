@@ -259,14 +259,18 @@ def ReadInput():
 
             # Tank based Steering
             stickPos = abs(analogMap[0]) #Postion of Left Stick
-            deadzone = 0.3
+            deadzone = 0.21
             bias = 0 # mutilpication of power that will be applied of somthing
             if stickPos > deadzone:
-                bias = 2.4*stickPos**3 -3.47*stickPos**2 + 1.7*stickPos # how much the power will be distribuited: -1: 90%L 10%R,  0: 50%L 50%R, +1: 10%L 90%R
+                if stickPos < 0.41:
+                    bias = 14.3*stickPos**3 # how much the power will be distribuited: -1: 90%L 10%R,  0: 50%L 50%R, +1: 10%L 90%R
+                    bias = 1-bias
+                else:
+                    bias = 1.3*stickPos**3 -1.7*stickPos**2 - 0.6*stickPos
                 if analogMap[0] < 0: # left
-                    DATA.left = int( DATA.left * (1-bias))
+                    DATA.left = int( DATA.left * bias)
                 else: # right
-                    DATA.right = int( DATA.left * (1-bias))
+                    DATA.right = int( DATA.left * bias)
 
 
 
