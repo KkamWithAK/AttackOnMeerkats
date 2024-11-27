@@ -301,6 +301,18 @@ def ReadInput():
             DATA.ch2 = 0
         if buttonMapState['l1']:
             DATA.ch1 = 32
+        if buttonMapState['up']:
+            DATA.left = 127
+            DATA.right = 127
+        if buttonMapState['down']:
+            DATA.right = -127
+            DATA.left = -127
+        if buttonMapState['left']:
+            DATA.right = 127
+            DATA.left = -127
+        if buttonMapState['right']:
+            DATA.right = 127
+            DATA.left = -127
 
 
             

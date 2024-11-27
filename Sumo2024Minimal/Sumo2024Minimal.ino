@@ -1,7 +1,7 @@
 #include <WiFi.h>       //A collection of objects and functions for using WiFi on the ESP32
 #include "Actuators.h"  //This code is in the other tabs at the top of the IDE. Putting it here will de-clutter our code.
 
-const char *ssid = "Kaamil";    //The SSID of your hotspot, or network name
+const char *ssid = "Meerkats";    //The SSID of your hotspot, or network name
 const char *password = "password"; //The password of your network
 
 WiFiUDP Udp;  //Set up an object that handles UDP
