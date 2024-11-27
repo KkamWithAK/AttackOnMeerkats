@@ -21,8 +21,11 @@ byte packetBuffer[255];  //We'll store the bytes from the UDP packet here. It ca
 unsigned int localPort = 100;  //Port number- make sure this is the same in both the python script and here
 
 SimpleMotor left(8,9);  //Make a motor object, to represent the left motor
+//SimpleMotor left2(14,13);  //Make a motor object, to represent the left motor
+//SimpleMotor right2(16,15);
 SimpleMotor right(10,11);
-Servo servo(7, 500, 2500);
+Servo rightServo(6, 500, 2500);
+Servo leftServo(7, 500, 2500);
 int len;        //number of bytes recieved
 
 void setup() {
@@ -54,9 +57,14 @@ void loop() {
   int speedLeft = (int8_t)packetBuffer[0]; //The packet is of datatype byte- this goes from 0-255. We want -127 to 128, so we'll use (int8_t) to convert it
   int speedRight = (int8_t)packetBuffer[1];
   int servoPos = packetBuffer[2];
+  int servoPos2 = packetBuffer[3];
   left.setSpeed(speedLeft);
   right.setSpeed(speedRight);
-  servo.writeAngle(servoPos);
+  rightServo.writeAngle(servoPos);
+  //left2.setSpeed(speedLeft);
+  //right2.setSpeed(speedRight);
+  leftServo.writeAngle(servoPos2);
+
 
 
   delay(5);

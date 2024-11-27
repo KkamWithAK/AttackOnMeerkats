@@ -27,8 +27,8 @@ sock = socket.socket(socket.AF_INET, # Internet
 class DATA:
     left = 0    # left motor
     right = 0   # right motor
-    ch1 = 90    # servo 1
-    ch2 = 0
+    ch1 = 0    # left servo  [0-14] (0 to 20 degrees)
+    ch2 = 32   # right servo
     ch3 = 0
     ch4 = 0
     ch5 = 0
@@ -64,6 +64,17 @@ for each in buttonMap:
 
 #while True:
 def ReadInput():
+    def ServoTest():
+        import Networking
+        Networking.setup()
+        for i in range (0,128,20):
+            DATA.ch1 = i
+            ArrDATA = array.array('b',[DATA.left, DATA.right, DATA.ch1, DATA.ch2, DATA.ch3, DATA.ch4, DATA.ch5, DATA.ch6])
+            print("testing")
+            time.sleep(1)
+            Networking.sendData(ArrDATA)
+
+    
     # initialsing varibles
     global lastTime
     global ArrDATA
@@ -131,6 +142,9 @@ def ReadInput():
                     DATA.ch6 = 2
                 else:
                     DATA.ch6 = 1
+            if keys [pygame.K_l]:
+                ServoTest()
+                keyPressed = True
 
             if not(keyPressed):
                 DATA.left = 0
@@ -142,7 +156,8 @@ def ReadInput():
         # PRESSED A DIGITAL BUTTON
         if event.type == pygame.JOYBUTTONDOWN:
             if event.button == buttonMap['x']:
-                DATA.ch1 = 127 # spin servo to max
+                DATA.ch1 = 32
+                DATA.ch2 = 0 # spin servo to max
                 print("x")
                 buttonMapState['x'] = True
             if event.button == buttonMap['circle']:
@@ -198,6 +213,7 @@ def ReadInput():
                 print("x released")
                 buttonMapState['x'] = False
                 DATA.ch1 = 0
+                DATA.ch2 = 32
             if event.button == buttonMap['circle']:
                 print("circle released")
                 buttonMapState['circle'] = False
@@ -281,27 +297,33 @@ def ReadInput():
         if buttonMapState['square']: # Handbrake
             DATA.left = 0
             DATA.right = 0
+        if buttonMapState['r1']:
+            DATA.ch2 = 0
+        if buttonMapState['l1']:
+            DATA.ch1 = 32
 
 
             
     DATA.left = constrain(DATA.left, -127, 127)
     DATA.right = constrain(DATA.right, -127, 127)
-    DATA.ch6 = constrain(DATA.ch6, 0, 2)
     
     
     if (time.time()-lastTime>0.4):
         #print(prevArray,"\t",ArrDATA)
         lastTime=time.time()
         ArrDATA = array.array('b',[DATA.left, DATA.right, DATA.ch1, DATA.ch2, DATA.ch3, DATA.ch4, DATA.ch5, DATA.ch6])
-        print(DATA.left, DATA.right,analogMap[0])
+        print(DATA.left)
         #sock.sendto(ArrDATA, (UDP_IP, UDP_PORT))
         return ArrDATA
-    if (prevArray != ArrDATA and time.time() - lastTime > 0.015):
+    if (prevArray != ArrDATA and time.time() - lastTime > 0.017):
         lastTime=time.time()
         ArrDATA = array.array('b',[DATA.left, DATA.right, DATA.ch1, DATA.ch2, DATA.ch3, DATA.ch4, DATA.ch5, DATA.ch6])
-        print(DATA.left, DATA.right,analogMap[0])
+        print(DATA.left)
         #sock.sendto(ArrDATA, (UDP_IP, UDP_PORT))
         return ArrDATA
+
+    
+
     
 
 
