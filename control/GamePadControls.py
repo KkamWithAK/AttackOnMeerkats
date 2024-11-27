@@ -170,9 +170,17 @@ def ReadInput():
                 print("square")
                 buttonMapState['square'] = True
             if event.button == buttonMap['l1']:
+                if DATA.ch1 >16:
+                    DATA.ch1 = 32
+                else:
+                    DATA.ch1 = 0
                 print("l1")
                 buttonMapState['l1'] = True
             if event.button == buttonMap['r1']:
+                if DATA.ch2 >16:
+                    DATA.ch2 = 32
+                else:
+                    DATA.ch2 = 0
                 print("r1")
                 buttonMapState['r1'] = True
             if event.button == buttonMap['l3']:
@@ -297,10 +305,10 @@ def ReadInput():
         if buttonMapState['square']: # Handbrake
             DATA.left = 0
             DATA.right = 0
-        if buttonMapState['r1']:
-            DATA.ch2 = 0
-        if buttonMapState['l1']:
-            DATA.ch1 = 32
+        # if buttonMapState['r1']:
+        #     DATA.ch2 = 0
+        # if buttonMapState['l1']:
+        #     DATA.ch1 = 32
         if buttonMapState['up']:
             DATA.left = 127
             DATA.right = 127
